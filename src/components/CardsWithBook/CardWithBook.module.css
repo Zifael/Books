@@ -1,0 +1,55 @@
+.block__cards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cards {
+    width: 18rem;
+    margin: 1rem;
+    cursor: pointer;
+}
+
+.img {
+    width: 17.9rem;
+    height: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;    
+    background-color: rgb(245,245,248)
+}
+
+.titleCard {  
+    overflow: hidden;        
+    text-overflow: ellipsis;
+}
+
+
+
+.titleCategories {    
+    height: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 20px 20px 0;   
+}
+
+.categories{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.titleAuthors {    
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;    
+}
+
+.author {        
+    display: flex;
+    flex-wrap: wrap;       
+}
+
+.button__card {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}

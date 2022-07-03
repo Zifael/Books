@@ -1,0 +1,48 @@
+.oneBook {
+    margin-top: 150px;
+}
+
+.oneBook__blockOne {
+    background-color:rgb(245,245,248);     
+}
+.oneBook__block__img {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.oneBook__img {
+    width: 400px;
+    height: 600px;     
+    
+}
+
+.oneBook__blockSecond {
+    margin-top: 20px;
+    margin-left: 20px
+}
+
+.oneBook__title {
+    margin-bottom: 3em;
+}
+
+.oneBook__info__block {
+    margin-top: 10px;
+    display: flex;    
+}
+
+.oneBook__criterion {
+    margin-left: 5px;
+}
+
+.oneBook__description {
+    margin-top: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5); 
+    padding: 10px;
+    margin-bottom: 20px;    
+    overflow: hidden;    
+}
+
+.oneBook__pageCount {
+    margin-top: 10px;
+}

@@ -1,10 +1,5 @@
-export interface IFoundBooks {
-    items: Array<Items>,
-    kind: string,
-    totalItems: number
-}
 
-interface Items {
+export interface Items {
     accessInfo: any,
     etag: string,
     id: string,
@@ -28,8 +23,8 @@ interface iVolumeInfo {
     canonicalVolumeLink: string,
     categories: Array<string>,
     contentVersion: string,
-    description: string,
-    imageLinks: {
+    description?: string,
+    imageLinks?: {
         smallThumbnail: string,
         thumbnail: string
     },

@@ -2,7 +2,7 @@ import React from 'react';
 import { Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import s from './FormSelect.module.css'
 
-function DropDown() {
+function DropDown({setCurrentCategory, setCurrentSort}: any) {
     let categories = [
         {id: 1, select: 'all'},
         {id: 2, select: 'art'},
@@ -22,7 +22,7 @@ function DropDown() {
         <div className={s.dropDown}>
            <div className={s.dropDown__block}>
                 <div className={s.dropDown__title}>Categories</div>
-                <Form.Select className={s.selectBlock} >
+                <Form.Select onChange={e => setCurrentCategory(e.target.value)} className={s.selectBlock} >
                     {categories.map(e => 
                         <option key={e.id}>{e.select}</option>                        
                     )}
@@ -30,7 +30,7 @@ function DropDown() {
            </div>
            <div className={s.dropDown__block}>
                 <div className={s.dropDown__title}>Sorting by</div>
-                <Form.Select onChange={e => console.log(e.target.value)} className={s.selectBlock}>
+                <Form.Select onChange={e => setCurrentSort(e.target.value)} className={s.selectBlock}>
                     {sort.map(e => 
                         <option  key={e.id}>{e.select}</option>  
                     )}                  

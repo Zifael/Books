@@ -1,68 +1,53 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Button, Card, Form, InputGroup } from 'react-bootstrap';
+import { Button, Form, } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { getBooks } from '../../api/api';
 import FormSelect from '../../components/FormSelect/FormSelect';
+import { getPageBooks, setFoundBooks } from '../../toolkitRedux/reducer-books';
 import s from './MainPage.module.css'
-
+import CardWithBook from '../../components/CardsWithBook/CardWithBook';
 
 
 function MainPage () {
 
-    const [valueSearch, setValueSearch] = useState('')
-
-    let arr = [1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,]
-    const [state, setState] = useState() 
-    const f = async(orderBy?: string,query?: string, ) => {
-        let a = axios.create({
-          baseURL: 'https://www.googleapis.com/books/v1/',
-          params: {
-            maxResults: 30,
-            key: 'AIzaSyBq3rQ_tTT9Ajd4B0v-tKaSpryAlwQglKY'
-          }
-        })
-        let getBook = await a.get(`volumes?q=${query}`, {
-          params: {
-                   orderBy        
-          }
-        }) 
-        
-        setState(getBook.data);
-        //console.log(getBook.data)    
-        
+    const [valueSearch, setValueSearch] = useState('') 
+    const [currentCategory, setCurrentCategory] = useState('all') 
+    const [currentSort, setCurrentSort] = useState('relevance')
+    const dispath = useDispatch()   
+    
+    const f = async(query?: string, orderBy?: string, ) => {
+        let book = await getBooks('Гарри Потер', 'relevance')                       
+        dispath( setFoundBooks(book) )            
       }
       useEffect(() => {
-          f('newest', 'Harry+Potter', )
-          
-      }, [])
-      console.log(state)
+             f()          
+    }, [])
+     
+    const searchBooks = async(e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        let findBook = await getBooks(valueSearch, currentSort, currentCategory)  
+        dispath( setFoundBooks(findBook) )
+    }
+
+      
+   
     return (
         <div>
             <h1 className={s.title}>LITERATURE</h1>           
-            <InputGroup className={s.search__input} size="lg">                
+            <Form onSubmit={(e) => searchBooks(e)}  className={s.search__input} >                
                 <Form.Control
-                aria-label="Large"
-                aria-describedby="inputGroup-sizing-sm"
-                placeholder='Search'   
-                value={valueSearch}    
-                onChange={e => setValueSearch(e.target.value)}         
+                    aria-label="Large"
+                    aria-describedby="inputGroup-sizing-sm"
+                    placeholder='Search'   
+                    value={valueSearch}    
+                    onChange={e => setValueSearch(e.target.value)}         
                 /> 
-            </InputGroup> 
-            <FormSelect />           
-            <div className={s.block__cards}>
-                {arr.map(e => 
-                    <Card className={s.cards}>
-                        <Card.Img variant="top" src="holder.js/100px180" />
-                        <Card.Body>
-                            <Card.Title>{null}</Card.Title>
-                            <Card.Text>
-                            Some quick example text to build on the card title and make up the
-                            bulk of the card's content.
-                            </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
-                )}
-            </div>
+                <Button className={s.search__button} variant="outline-secondary">
+                     Search
+                </Button>
+            </Form> 
+            <FormSelect setCurrentCategory={setCurrentCategory} setCurrentSort={setCurrentSort} />           
+            <CardWithBook />
             <Button className={s.button__leadMore}>Load more</Button>
         </div>
     );

@@ -7,24 +7,25 @@ let API = axios.create({
       key: 'AIzaSyBq3rQ_tTT9Ajd4B0v-tKaSpryAlwQglKY'
     }
     
-  })
+})
 
 
-export const getBooks = async (query?: string, orderBy?: string, categories?: string, startIndex?: number, authors?: string ) => {
-	let getBooks = await API.get(`volumes?q=${query}`, {
+
+export const getBooks = async <T>(query:T, orderBy?:T, categories?:T, startIndex?: number, authors?:T ) => {
+	const {data} = await API.get(`volumes?q=${query}`, {
 		params: {				
 				orderBy,
 				categories,
-				startIndex: 0,
+				startIndex,
 				authors,
 							      
 		}
 	}) 		
-  	return getBooks.data.items
+  	return data
 }
 
 
 export const getOneBook = async (id: string) => {
-	let getOneBook = await API.get(`volumes/${id}`) 	
-  	return getOneBook.data
+	const {data} = await API.get(`volumes/${id}`) 	
+  	return data
 }

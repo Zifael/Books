@@ -1,14 +1,14 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Container } from 'react-bootstrap';
 import Routers from './components/Routers/Routers';
-import MainPage from './Page/MainPage/MainPage';
+import './App.css'
+import { useNavigate } from 'react-router-dom';
 
-
-function App  () {   
-  
+function App  () {     
+  const navigate = useNavigate()
   return (
     <Container >
+      <h1 className='app__title' onClick={() => navigate(-1)}>LITERATURE</h1>
       <Routers />
     </Container>
   );

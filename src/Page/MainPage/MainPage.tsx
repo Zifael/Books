@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Form, } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getBooks } from '../../api/api';
 import FormSelect from '../../components/FormSelect/FormSelect';
-import { getPageBooks, setFoundBooks } from '../../toolkitRedux/reducer-books';
+import { getPageBooks, setFoundBooks, setStartIndex, setTotalItems, setValueQuery } from '../../toolkitRedux/reducer-books';
 import s from './MainPage.module.css'
 import CardWithBook from '../../components/CardsWithBook/CardWithBook';
+import { foundBooks, startIndex, totalItems, valueQuery } from '../../components/selectors/selectors';
+import Spiner from '../../components/Spiner/Spiner';
 
 
 function MainPage () {
@@ -13,28 +15,52 @@ function MainPage () {
     const [valueSearch, setValueSearch] = useState('') 
     const [currentCategory, setCurrentCategory] = useState('all') 
     const [currentSort, setCurrentSort] = useState('relevance')
-    const dispath = useDispatch()   
-    
-    const f = async(query?: string, orderBy?: string, ) => {
-        let book = await getBooks('Гарри Потер', 'relevance')                       
-        dispath( setFoundBooks(book) )            
-      }
-      useEffect(() => {
-             f()          
-    }, [])
+    const [loading, setLoading] = useState(false)
+    const books = useSelector(foundBooks)
+    const totalitems = useSelector(totalItems)
+    const startindex = useSelector(startIndex)
+    const valuequery = useSelector(valueQuery)
+    const dispatch = useDispatch()       
+
+
+    const setBooks = async(setDispatch: any, startingIndex: number) => {
+        setLoading(true)           
+        try {
+            let findBook
+            if(valueSearch || valuequery) {
+                if(valueSearch) {
+                    dispatch( setValueQuery(valueSearch) )  // save Query in valueQuery if valueSearch is empty
+                    findBook = await getBooks(valueSearch, currentSort, currentCategory, startingIndex)                      
+                } else {
+                    findBook = await getBooks(valuequery, currentSort, currentCategory, startingIndex)                     
+                }
+            }
+            dispatch( setTotalItems(findBook.totalItems)) 
+            if(findBook.items !== undefined)  dispatch( setDispatch(findBook.items) )                   
+        } catch (e) {
+            console.error(e)
+        }       
+        setLoading(false)
+    }
      
-    const searchBooks = async(e: React.FormEvent<HTMLFormElement>) => {
+    const searchBooks = async() => { 
+        setBooks(setFoundBooks, 0)       
+    }        
+   
+    const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        let findBook = await getBooks(valueSearch, currentSort, currentCategory)  
-        dispath( setFoundBooks(findBook) )
+        searchBooks()  
     }
 
-      
-   
+    const addBooks = () => {
+        dispatch( setStartIndex(startindex + 30))
+        setBooks(getPageBooks, startindex + 30)   
+    }
+    
+     
     return (
-        <div>
-            <h1 className={s.title}>LITERATURE</h1>           
-            <Form onSubmit={(e) => searchBooks(e)}  className={s.search__input} >                
+        <div>                       
+            <Form onSubmit={(e) => submit(e)}  className={s.search__input} >                
                 <Form.Control
                     aria-label="Large"
                     aria-describedby="inputGroup-sizing-sm"
@@ -42,13 +68,30 @@ function MainPage () {
                     value={valueSearch}    
                     onChange={e => setValueSearch(e.target.value)}         
                 /> 
-                <Button className={s.search__button} variant="outline-secondary">
+                <Button onClick={() => searchBooks()} className={s.search__button} variant="outline-dark">
                      Search
                 </Button>
-            </Form> 
-            <FormSelect setCurrentCategory={setCurrentCategory} setCurrentSort={setCurrentSort} />           
-            <CardWithBook />
-            <Button className={s.button__leadMore}>Load more</Button>
+            </Form>                     
+            {books.length !== 0 ?  <div className={s.totalItems}>Found: {totalitems} result</div> : null}
+            {books.length !== 0 ?            
+            <>                   
+                <FormSelect 
+                    currentCategory={currentCategory} 
+                    currentSort={currentSort}
+                    setCurrentCategory={setCurrentCategory} 
+                    setCurrentSort={setCurrentSort}                       
+                />           
+                    <CardWithBook />
+                {loading 
+                ? 
+                    <Button  className={s.button__leadMore}>Loading...</Button> 
+                :
+                    <Button onClick={() => addBooks()} className={s.button__leadMore}>Load more</Button> }             
+            </>
+            : null}
+            {loading ? <Spiner/> : null }
+            {totalitems === 0 ? <div>Your search - {valuequery} - did not match any documents.</div> : null}           
+                        
         </div>
     );
 }

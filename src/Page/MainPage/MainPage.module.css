@@ -1,19 +1,25 @@
-.title {
-    margin: 20px;
-}
-
-
-
 .search__input {
     margin-bottom: 10px;  
     position: relative;  
 }
 
+.totalItems {
+    font-size: medium;
+}
+
 .search__button {
+    padding: 5px;
+    border: 2px solid #ccc;
     position: absolute;
     right: 0;
-    top: 0
+    top: 0;
+   
 }
+
+.search__button:active {   
+    border: none
+}
+
 
 
 .button__leadMore {

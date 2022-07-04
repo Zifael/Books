@@ -9,8 +9,7 @@ const rootReducer = combineReducers({
 export type RootState = ReturnType<typeof rootReducer>
 
 const store = configureStore({
-    reducer: rootReducer,
-    
+    reducer: rootReducer
 })
 
 export default store

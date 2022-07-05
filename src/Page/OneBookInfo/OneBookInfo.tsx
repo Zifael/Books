@@ -5,7 +5,7 @@ import s from './OneBookInfo.module.css'
 import {getOneBook} from '../../api/api'
 import { useDispatch, useSelector } from 'react-redux';
 import { oneBook } from '../../components/selectors/selectors';
-import { setOneBook } from '../../toolkitRedux/reducer-books';
+import { setOneBook } from '../../toolkitRedux/reducer-books/reducer-books';
 import noImgBook from '../../Img/noImgBook.png'
 import Spiner from '../../components/Spiner/Spiner';
 
@@ -39,7 +39,7 @@ function OneBookInfo() {
     }
 
     return (        
-        <>            
+        <div  className={s.wraper__oneBook}>            
             {book ?  
                 <Row className={s.oneBook}>
                     <Col className={s.oneBook__blockOne}>
@@ -70,7 +70,7 @@ function OneBookInfo() {
                 </Row>
                 : null
             }
-        </>        
+        </div>        
     );
 }
 

@@ -1,4 +1,13 @@
+.wraper {
+        width: 100%;  
+        min-height: 100vh;    
+        height: auto;        
+        background: no-repeat url("./Img/fonApp.jpg");
+        background-color: black;
+}
+
 .app__title {    
-        margin: 20px;
-        cursor: pointer;   
+        padding: 20px;
+        cursor: pointer; 
+        color: white  
 }

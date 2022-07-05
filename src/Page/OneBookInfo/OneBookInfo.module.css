@@ -1,10 +1,13 @@
+.wraper__oneBook {
+    background: no-repeat url("../../Img/fon.jpg");
+    background-position: center;
+}
+
 .oneBook {
     margin-top: 100px;
 }
 
-.oneBook__blockOne {
-    background-color:rgb(245,245,248);     
-}
+
 .oneBook__block__img {
     display: flex;
     justify-content: center;
@@ -24,6 +27,7 @@
 
 .oneBook__title {
     margin-bottom: 3em;
+    margin-top: 1em;
 }
 
 .oneBook__info__block {
@@ -36,13 +40,20 @@
 }
 
 .oneBook__description {
-    margin-top: 20px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5); 
+    margin-top: 20px;    
     padding: 10px;
     margin-bottom: 20px;    
-    overflow: hidden;    
+    overflow: hidden;     
 }
 
 .oneBook__pageCount {
     margin-top: 10px;
 }
+
+@media screen and (max-width: 1199px) {
+    .oneBook {
+        margin-top: 100px;
+        background-color: rgb(134, 150, 194);
+    }   
+}
+

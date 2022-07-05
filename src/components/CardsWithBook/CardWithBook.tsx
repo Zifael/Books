@@ -11,7 +11,7 @@ function CardWithBook() {
     const navigate = useNavigate()
     
     return (
-        <div className={s.block__cards}>
+        <div  className={s.block__cards}>
                 {foundBook && foundBook.map((e, i) =>
                     <Card key={i} className={s.cards} onClick={() => navigate(`/info-book/${e.id}`)}>
                         <Card.Img 

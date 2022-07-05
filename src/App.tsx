@@ -7,10 +7,12 @@ import { useNavigate } from 'react-router-dom';
 function App  () {     
   const navigate = useNavigate()
   return (
-    <Container >
-      <h1 className='app__title' onClick={() => navigate(-1)}>LITERATURE</h1>
-      <Routers />
-    </Container>
+    <div className='wraper'>
+      <Container className='container'>
+        <h1 className='app__title' onClick={() => navigate(-1)}>LITERATURE</h1>
+        <Routers />
+      </Container>
+    </div>
   );
 }
 

@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Items } from "./type-foundBooks/type-foundBooks";
+import { Items } from "../type-foundBooks/type-foundBooks";
 
 type SlicState = { 
     valueQuery: string,       
     foundBooks: Array<Items> | [],
     oneBook: Items | null,
     startIndex: number,
-    totalItems: number | null
+    totalItems: number | null,
 }
 
 

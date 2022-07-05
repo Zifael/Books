@@ -3,7 +3,7 @@ import { Button, Form, } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBooks } from '../../api/api';
 import FormSelect from '../../components/FormSelect/FormSelect';
-import { getPageBooks, setFoundBooks, setStartIndex, setTotalItems, setValueQuery } from '../../toolkitRedux/reducer-books';
+import { getPageBooks, setFoundBooks, setStartIndex, setTotalItems, setValueQuery } from '../../toolkitRedux/reducer-books/reducer-books';
 import s from './MainPage.module.css'
 import CardWithBook from '../../components/CardsWithBook/CardWithBook';
 import { foundBooks, startIndex, totalItems, valueQuery } from '../../components/selectors/selectors';
@@ -23,7 +23,7 @@ function MainPage () {
     const dispatch = useDispatch()       
 
 
-    const setBooks = async(setDispatch: any, startingIndex: number) => {
+    const setBooks = async(setDispatch: any, startingIndex?: number) => {        
         setLoading(true)           
         try {
             let findBook
@@ -44,7 +44,7 @@ function MainPage () {
     }
      
     const searchBooks = async() => { 
-        setBooks(setFoundBooks, 0)       
+        setBooks(setFoundBooks)       
     }        
    
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -61,14 +61,18 @@ function MainPage () {
     return (
         <div>                       
             <Form onSubmit={(e) => submit(e)}  className={s.search__input} >                
-                <Form.Control
+                <Form.Control                    
                     aria-label="Large"
                     aria-describedby="inputGroup-sizing-sm"
                     placeholder='Search'   
                     value={valueSearch}    
                     onChange={e => setValueSearch(e.target.value)}         
                 /> 
-                <Button onClick={() => searchBooks()} className={s.search__button} variant="outline-dark">
+                <Button                     
+                    onClick={() => searchBooks()} 
+                    className={s.search__button} 
+                    variant="outline-dark"
+                >
                      Search
                 </Button>
             </Form>                     
@@ -79,14 +83,16 @@ function MainPage () {
                     currentCategory={currentCategory} 
                     currentSort={currentSort}
                     setCurrentCategory={setCurrentCategory} 
-                    setCurrentSort={setCurrentSort}                       
+                    setCurrentSort={setCurrentSort}
+                    searchBooks={searchBooks}
+                    loading={loading}                                       
                 />           
                     <CardWithBook />
                 {loading 
                 ? 
-                    <Button  className={s.button__leadMore}>Loading...</Button> 
+                    <Button variant="light" disabled={true} className={s.button__leadMore}>Loading...</Button> 
                 :
-                    <Button onClick={() => addBooks()} className={s.button__leadMore}>Load more</Button> }             
+                    <Button variant="light" onClick={() => addBooks()} className={s.button__leadMore}>Load more</Button> }             
             </>
             : null}
             {loading ? <Spiner/> : null }

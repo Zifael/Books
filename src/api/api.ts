@@ -11,14 +11,11 @@ let API = axios.create({
 
 
 
-export const getBooks = async <T>(query:T, orderBy?:T, categories?:T, startIndex?: number, authors?:T ) => {
-	const {data} = await API.get(`volumes?q=${query}`, {
+export const getBooks = async <T>(query:T, orderBy:T, mainCategory: string, startIndex?: number ) => {	
+	const {data} = await API.get(`volumes?q=${query}${mainCategory !== 'all' && `+subject:${mainCategory}`}`, {
 		params: {				
-				orderBy,
-				categories,
-				startIndex,
-				authors,
-							      
+				orderBy,				
+				startIndex,									      
 		}
 	}) 		
   	return data

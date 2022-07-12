@@ -9,10 +9,10 @@ import s from './CardWithBook.module.css'
 function CardWithBook() {
     const foundBook = useSelector(foundBooks)
     const navigate = useNavigate()
-    
+    console.log(foundBook)
     return (
         <div  className={s.block__cards}>
-                {foundBook && foundBook.map((e, i) =>
+                {foundBook.length !== 0 && foundBook.map((e, i) =>
                     <Card key={i} className={s.cards} onClick={() => navigate(`/info-book/${e.id}`)}>
                         <Card.Img 
                             className={s.img}

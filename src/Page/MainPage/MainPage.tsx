@@ -27,8 +27,8 @@ function MainPage () {
         setLoading(true)           
         try {
             let findBook
-            if(valueSearch || valuequery) {
-                if(valueSearch) {
+            if (valueSearch || valuequery) {
+                if (valueSearch) {
                     dispatch( setValueQuery(valueSearch) )  // save Query in valueQuery if valueSearch is empty
                     findBook = await getBooks(valueSearch, currentSort, currentCategory, startingIndex)                      
                 } else {
@@ -36,7 +36,11 @@ function MainPage () {
                 }
             }
             dispatch( setTotalItems(findBook.totalItems)) 
-            if(findBook.items !== undefined)  dispatch( setDispatch(findBook.items) )                   
+            if (findBook.items !== undefined) {
+                dispatch( setDispatch(findBook.items) )     
+            } else {
+                dispatch( setDispatch(null) )
+            }              
         } catch (e) {
             console.error(e)
         }       

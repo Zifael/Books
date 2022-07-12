@@ -27,8 +27,11 @@ const reducerBooks =  createSlice({
         setTotalItems (state, action) {
             state.totalItems = action.payload
         },  
-        setFoundBooks (state, action) {            
-            state.foundBooks = action.payload        
+        setFoundBooks (state, action) {     
+            action.payload === null 
+            ?  state.foundBooks = []           
+            :  state.foundBooks = action.payload        
+                   
         },
         setOneBook (state, action) {
             state.oneBook = action.payload

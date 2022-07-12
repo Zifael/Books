@@ -9,7 +9,7 @@ function App  () {
   return (
     <div className='wraper'>
       <Container className='container'>
-        <h1 className='app__title' onClick={() => navigate(-1)}>LITERATURE</h1>
+        <h1 className='app__title' onClick={() => navigate('/')}>LITERATURE</h1>
         <Routers />
       </Container>
     </div>
